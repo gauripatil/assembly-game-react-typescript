@@ -47,11 +47,16 @@ Press `Enter` / `Space` to start a new game when `isGameOver` is true, so the wh
 
 - [ ] Strip redundant type annotations (exercise-style `: string` on inferred values); drop verbose `JSX.Element` return types
 - [ ] Add an MIT `LICENSE` file and remove the placeholder license note from `README.md`
-- [ ] Add a demo GIF / screenshot to `README.md`
+- [ ] **Record demo GIF** → save as `public/demo.gif`, then uncomment the line in `README.md`
+- [ ] **Deploy live demo** (Vercel / Netlify / GitHub Pages) → uncomment the live-demo line in `README.md` and add it to the repo About → Website field
+- [ ] **Set GitHub repo Topics** (About → ⚙): `react` `typescript` `vite` `wordle` `word-game` `game` `react-hooks` `education` `scrimba` `accessibility`
 - [ ] Add unit tests for `utils.ts` and the win/loss logic in `App.tsx`
-- [ ] Deploy a live demo (Vercel / Netlify / GitHub Pages)
 
 ## Done
 
 - [x] Rewrite `README.md` (replaced default Vite template boilerplate)
 - [x] Remove all `CHALLENGE` comments and the dead `React.FC` block
+- [x] Compact README with badges, tech stack, keywords, scripts
+- [x] Add "What I Built / What I Learned" section (claims only the TypeScript layer — honest attribution)
+- [x] Add Attribution section crediting the Scrimba base project
+- [x] Add commented placeholders for demo GIF + live demo link

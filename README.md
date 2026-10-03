@@ -1,30 +1,27 @@
 # Assembly: Endgame
 
-A Wordle-style word guessing game built with **React** and **TypeScript**. Guess the hidden word one letter at a time before your stack of programming languages is exhausted — and Assembly takes over the world.
+A Wordle-style word guessing game in **React** + **TypeScript**. Guess the word before your stack of programming languages runs out — and Assembly takes over.
 
-## How to Play
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8.2-646CFF?logo=vite&logoColor=white)
+![ESLint](https://img.shields.io/badge/ESLint-10.8-4B32C3?logo=eslint&logoColor=white)
 
-- A random word is chosen from the word list.
-- Guess letters using the on-screen keyboard.
-- Correct letters are revealed on the word board.
-- Every wrong guess eliminates the next language from your stack — HTML, CSS, JavaScript, React, TypeScript, Node.js, Python, and more — each shown as a brand-colored chip.
-- Each wrong guess also triggers a randomized farewell message: *"Farewell, HTML"*, *"R.I.P., CSS"*, *"Node.js bites the dust"*…
-- Fill in the word before the stack runs out to win. Lose, and Assembly wins.
+Live demo: uncomment once deployed
+**Live demo:** https://assembly-game-react-typescript.vercel.app/
 
-## Features
 
-- Wordle-style letter guessing with correct / incorrect feedback on the keyboard
-- Language elimination stack with brand-colored chips
-- Randomized farewell messages on each wrong guess
-- Confetti celebration on a win
-- Fully typed components and props (TypeScript)
-- Accessible: ARIA live region announces guesses and remaining attempts to screen readers
-- "New Game" button after each round
-- Vite dev server with HMR, ESLint configured
+<!--
+  Demo GIF: record ~5s of gameplay (a win with confetti), save as public/demo.gif,
+  then uncomment:
+  ![Gameplay demo](public/demo.gif)
+-->
+
+---
 
 ## Tech Stack
 
-| | |
+| Layer | Choice |
 |---|---|
 | UI | React 19 |
 | Language | TypeScript |
@@ -32,71 +29,82 @@ A Wordle-style word guessing game built with **React** and **TypeScript**. Guess
 | Linting | ESLint 10 + typescript-eslint |
 | Utilities | `clsx`, `react-confetti` |
 
-## Getting Started
+## Keywords
 
-### Prerequisites
+`react` · `typescript` · `vite` · `wordle` · `word-game` · `game` · `react-hooks` · `word-guessing` · `education` · `scrimba` · `accessibility` · `aria-live` · `confetti`
 
-- [Node.js](https://nodejs.org/) and npm
-
-### Installation
+## Quick Start
 
 ```bash
 git clone https://github.com/gauripatil/assembly-game-react-typescript.git
 cd assembly-game-react-typescript
 npm install
-```
-
-### Development
-
-```bash
 npm run dev
 ```
 
-Then open the local URL printed in the terminal (usually `http://localhost:5173`).
+Open the local URL (default `http://localhost:5173`).
 
-### Production build
+## Features
 
-```bash
-npm run build      # type-check with tsc and bundle with vite
-npm run preview    # serve the production build locally
-```
+- Wordle-style letter guessing with on-screen keyboard feedback
+- Wrong guesses eliminate a stack of programming languages — each a brand-colored chip
+- Randomized farewell messages (*"Farewell, HTML"*, *"Node.js bites the dust"*)
+- Confetti on win
+- Typed components and props throughout (TypeScript)
+- ARIA live region announces guesses and remaining attempts
 
-### Lint
+## Scripts
 
-```bash
-npm run lint
-```
+| Command | What it does |
+|---|---|
+| `npm run dev` | Start dev server with HMR |
+| `npm run build` | Type-check (`tsc`) and bundle for production |
+| `npm run preview` | Serve the production build locally |
+| `npm run lint` | Run ESLint |
+
+## What I Built
+
+Base project: Scrimba's [Assembly: Endgame](https://scrimba.com/learn/learnreact) — a React course project by Bob Ziroll. This repo is the **TypeScript implementation**: I completed the course's typing challenges and carried that typing through the whole app.
+
+- **Typed props on every component** — explicit props objects (`GameStatusProps`, `KeyboardProps`, `LanguageChipsProps`, `WordLettersProps`, `AriaLiveStatusProps`) instead of untyped params or `React.FC` signatures
+- **Return type annotations** — every component and helper declares what it returns
+- **Utility types** — `Omit<Language, 'name'>` in `LanguageChips`, so the inline style object can't drift from the `Language` contract
+- **Typed helper layer** — `utils.ts` functions (`getRandomWord`, `getFarewellText`) annotated with parameter and return types
+- **Repo hygiene** — production build (`tsc -b && vite build`), ESLint 10 + typescript-eslint config, and a project-specific README
+
+### What I Learned
+
+- Deriving game state from a single `guessedLetters` array instead of storing multiple boolean flags
+- The difference between **state**, **derived state**, and **static values** in React
+- Why typed props objects beat `React.FC` for component contracts
+- Keeping pure logic (`utils.ts`) separate from rendering so it stays testable
+
+## How It Works
+
+Game state lives in `App.tsx`:
+
+- **Win** — every letter of the word has been guessed
+- **Lose** — wrong guesses reach `languages.length - 1`
+
+`utils.ts` picks the random word and generates farewell messages; `languages.ts` holds the elimination stack and brand colors.
 
 ## Project Structure
 
 ```
 src/
-  App.tsx                 # Game state, win/loss logic, layout
-  words.ts                # Word list used to pick the secret word
-  languages.ts            # Language stack (name + brand colors)
-  utils.ts                # getRandomWord, getFarewellText
-  components/
-    Header.tsx            # Title and game description
-    GameStatus.tsx        # Win/lose banner and farewell messages
-    LanguageChips.tsx     # Stack of languages, struck out on wrong guesses
-    WordLetters.tsx       # Hidden / revealed letters of the secret word
-    Keyboard.tsx          # On-screen alphabet keyboard
-    AriaLiveStatus.tsx    # Screen-reader status announcements
-    NewGameButton.tsx     # Reset button shown after a round ends
-    ConfettiContainer.tsx # Confetti overlay on a win
+  App.tsx              # Game state, win/loss logic, layout
+  words.ts             # Word list
+  languages.ts         # Language stack + brand colors
+  utils.ts             # getRandomWord, getFarewellText
+  components/          # Header, GameStatus, LanguageChips,
+                       # WordLetters, Keyboard, AriaLiveStatus,
+                       # NewGameButton, ConfettiContainer
 ```
 
-## How the Game Logic Works
+## Attribution
 
-All game state lives in `App.tsx`:
-
-- `guessedLetters` — every letter the player has picked so far
-- `wrongGuessCount` — guessed letters that are **not** in the secret word
-- You **win** when every letter of the word has been guessed
-- You **lose** when `wrongGuessCount` reaches the number of allowed wrong guesses (`languages.length - 1`)
-
-`utils.ts` picks a random word and generates the farewell messages; `languages.ts` holds the elimination stack and each language's brand colors.
+Base project: [Assembly: Endgame](https://scrimba.com/learn/learnreact) by Bob Ziroll, from [Scrimba](https://scrimba.com)'s React course. This repo is a TypeScript implementation of that course project — see [What I Built](#what-i-built) for what was added on top.
 
 ## License
 
-Add a license here before publishing publicly.
+Add a license before publishing publicly.
