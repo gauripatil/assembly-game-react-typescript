@@ -7,7 +7,7 @@ A Wordle-style word guessing game in **React** + **TypeScript**. Guess the word 
 ![Vite](https://img.shields.io/badge/Vite-8.2-646CFF?logo=vite&logoColor=white)
 ![ESLint](https://img.shields.io/badge/ESLint-10.8-4B32C3?logo=eslint&logoColor=white)
 
-Live demo: uncomment once deployed
+
 **Live demo:** https://assembly-game-react-typescript.vercel.app/
 
 
