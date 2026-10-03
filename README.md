@@ -1,75 +1,102 @@
-# React + TypeScript + Vite
+# Assembly: Endgame
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Wordle-style word guessing game built with **React** and **TypeScript**. Guess the hidden word one letter at a time before your stack of programming languages is exhausted — and Assembly takes over the world.
 
-Currently, two official plugins are available:
+## How to Play
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- A random word is chosen from the word list.
+- Guess letters using the on-screen keyboard.
+- Correct letters are revealed on the word board.
+- Every wrong guess eliminates the next language from your stack — HTML, CSS, JavaScript, React, TypeScript, Node.js, Python, and more — each shown as a brand-colored chip.
+- Each wrong guess also triggers a randomized farewell message: *"Farewell, HTML"*, *"R.I.P., CSS"*, *"Node.js bites the dust"*…
+- Fill in the word before the stack runs out to win. Lose, and Assembly wins.
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Wordle-style letter guessing with correct / incorrect feedback on the keyboard
+- Language elimination stack with brand-colored chips
+- Randomized farewell messages on each wrong guess
+- Confetti celebration on a win
+- Fully typed components and props (TypeScript)
+- Accessible: ARIA live region announces guesses and remaining attempts to screen readers
+- "New Game" button after each round
+- Vite dev server with HMR, ESLint configured
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| | |
+|---|---|
+| UI | React 19 |
+| Language | TypeScript |
+| Build tool | Vite 8 |
+| Linting | ESLint 10 + typescript-eslint |
+| Utilities | `clsx`, `react-confetti` |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Prerequisites
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- [Node.js](https://nodejs.org/) and npm
 
+### Installation
+
+```bash
+git clone https://github.com/gauripatil/assembly-game-react-typescript.git
+cd assembly-game-react-typescript
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+npm run dev
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Then open the local URL printed in the terminal (usually `http://localhost:5173`).
+
+### Production build
+
+```bash
+npm run build      # type-check with tsc and bundle with vite
+npm run preview    # serve the production build locally
+```
+
+### Lint
+
+```bash
+npm run lint
+```
+
+## Project Structure
 
 ```
+src/
+  App.tsx                 # Game state, win/loss logic, layout
+  words.ts                # Word list used to pick the secret word
+  languages.ts            # Language stack (name + brand colors)
+  utils.ts                # getRandomWord, getFarewellText
+  components/
+    Header.tsx            # Title and game description
+    GameStatus.tsx        # Win/lose banner and farewell messages
+    LanguageChips.tsx     # Stack of languages, struck out on wrong guesses
+    WordLetters.tsx       # Hidden / revealed letters of the secret word
+    Keyboard.tsx          # On-screen alphabet keyboard
+    AriaLiveStatus.tsx    # Screen-reader status announcements
+    NewGameButton.tsx     # Reset button shown after a round ends
+    ConfettiContainer.tsx # Confetti overlay on a win
+```
+
+## How the Game Logic Works
+
+All game state lives in `App.tsx`:
+
+- `guessedLetters` — every letter the player has picked so far
+- `wrongGuessCount` — guessed letters that are **not** in the secret word
+- You **win** when every letter of the word has been guessed
+- You **lose** when `wrongGuessCount` reaches the number of allowed wrong guesses (`languages.length - 1`)
+
+`utils.ts` picks a random word and generates the farewell messages; `languages.ts` holds the elimination stack and each language's brand colors.
+
+## License
+
+Add a license here before publishing publicly.
