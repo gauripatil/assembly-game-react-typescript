@@ -1,10 +1,3 @@
-
-/*
-CHALLENGE: Type this 'languages' array
-HINT: There are 2 valid ways you can do this
-*/
-
-
 export type Language = {
     name: string;
     backgroundColor: string;

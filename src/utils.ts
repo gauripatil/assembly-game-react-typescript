@@ -1,11 +1,5 @@
 import { words } from "./words"
 
-/*
-CHALLENGE 1: Complete the getRandomIndex function
-CHALLENGE 2: Add type annotations where relevant
-CHALLENGE 3: Use getRandomIndex in getRandomWord and
-             getFarewellText
-*/
 function getRandomIndex(arr:string[]):number{
     return Math.floor(Math.random() * arr.length)
 }

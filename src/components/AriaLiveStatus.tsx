@@ -1,9 +1,3 @@
-/*
-CHALLENGE 1: Explictly type the AriaLiveStatus component's return value
-CHALLENGE 2: Type the component's props using a custom Type
-CHALLENGE 3: Type any variables in the functional component
-*/
-
 import type {JSX} from 'react'
 
 type AriaLiveStatusProps = {
